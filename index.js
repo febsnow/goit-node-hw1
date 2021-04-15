@@ -1,7 +1,7 @@
 const { Command } = require("commander");
 
 const {
-  listContacts,
+  showContactsList,
   getContactById,
   removeContact,
   addContact,
@@ -23,7 +23,7 @@ const argv = program.opts();
 function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      listContacts();
+      showContactsList();
       break;
 
     case "get":
