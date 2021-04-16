@@ -4,11 +4,14 @@ const uniqId = require('uniqid');
 
 const contactsPath = path.join(__dirname, './db/contacts.json');
 
-function writeAndShowContacts(data) {
-  fs.writeFile(contactsPath, JSON.stringify(data, null, '\t'))
-    .then(console.table(data))
-    .catch((err) => console.log(err));
+async function writeAndShowContacts(data) {
+  try {
+    fs.writeFile(contactsPath, JSON.stringify(data, null, '\t')).then(console.table(data));
+  } catch (error) {
+    console.log(error);
+  }
 }
+
 // TODO: задокументировать каждую функцию
 async function getContactsList() {
   try {
