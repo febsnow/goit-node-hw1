@@ -4,7 +4,7 @@ const uniqId = require('uniqid');
 
 const contactsPath = path.join(__dirname, './db/contacts.json');
 
-function write_n_showContacts(data) {
+function writeAndShowContacts(data) {
   fs.writeFile(contactsPath, JSON.stringify(data, null, '\t'))
     .then(console.table(data))
     .catch((err) => console.log(err));
@@ -33,9 +33,7 @@ async function getContactById(contactId) {
   try {
     const contacts = await getContactsList();
     const contactToShow = contacts.find((contact) => contact.id == contactId);
-    contactToShow
-      ? console.table(contactToShow)
-      : console.log(`Contact with ID ${contactId} not found`);
+    contactToShow ? console.table(contactToShow) : console.log(`Contact with ID ${contactId} not found`);
   } catch (error) {
     console.log(error);
   }
@@ -50,12 +48,10 @@ async function removeContact(contactId) {
       return console.log(`Contact with ID ${contactId} doesn't exist`);
     }
 
-    const newContacts = contactsList.filter(
-      (contact) => contact.id != contactId
-    );
+    const newContacts = contactsList.filter((contact) => contact.id != contactId);
 
     contacts = newContacts;
-    write_n_showContacts(contacts);
+    writeAndShowContacts(contacts);
   } catch (error) {
     console.log(error);
   }
@@ -71,11 +67,7 @@ async function addContact(name, email, phone) {
       phone,
     };
 
-    if (
-      contactsList.find(
-        ({ email }) => email.toLowerCase() === contact.email.toLowerCase()
-      )
-    ) {
+    if (contactsList.find(({ email }) => email.toLowerCase() === contact.email.toLowerCase())) {
       return console.log(`Contact with email ${email} already exist`);
     }
 
@@ -85,7 +77,7 @@ async function addContact(name, email, phone) {
 
     contactsList.push(contact);
 
-    write_n_showContacts(contactsList);
+    writeAndShowContacts(contactsList);
   } catch (error) {
     console.log(error);
   }
