@@ -43,7 +43,6 @@ async function getContactById(contactId) {
 }
 
 async function removeContact(contactId) {
-  let contacts = [];
   try {
     const contactsList = await getContactsList();
 
@@ -51,10 +50,9 @@ async function removeContact(contactId) {
       return console.log(`Contact with ID ${contactId} doesn't exist`);
     }
 
-    const newContacts = contactsList.filter((contact) => contact.id != contactId);
+    const filterContacts = contactsList.filter((contact) => contact.id != contactId);
 
-    contacts = newContacts;
-    writeAndShowContacts(contacts);
+    writeAndShowContacts(filterContacts);
   } catch (error) {
     console.log(error);
   }
